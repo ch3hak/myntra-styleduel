@@ -7,7 +7,6 @@ import Link from "next/link"
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-indigo-50">
-      {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 text-center">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 text-balance">
@@ -18,7 +17,6 @@ export default function HomePage() {
             in themed challenges, and vote in style duels.
           </p>
 
-          {/* Main Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link href="/themes">
               <Button size="lg" className="w-full sm:w-auto text-lg px-8 py-6 bg-amber-600 hover:bg-amber-700">
@@ -72,7 +70,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Themes */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <h3 className="text-3xl font-bold text-gray-900 mb-4">Featured Challenges</h3>
@@ -169,7 +166,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats Section */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -193,7 +189,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="border-t py-12 bg-gray-50">
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-4">

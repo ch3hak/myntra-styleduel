@@ -52,7 +52,6 @@ export function MoodboardGrid({ images, onRemoveImage, onAddImage }: MoodboardGr
               </div>
             ))}
 
-            {/* Add More Button */}
             <button
               onClick={handleAddSampleImage}
               className="aspect-square border-2 border-dashed border-muted-foreground/25 rounded-lg flex items-center justify-center hover:border-primary hover:bg-primary/5 transition-colors group"

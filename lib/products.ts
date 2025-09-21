@@ -39,7 +39,6 @@ export const themes = {
 }
 
 export const products: Product[] = [
-  // Summer Vibes Products
   {
     id: "clothing-dresses-summer-1",
     name: "Floral Maxi Dress",
@@ -106,7 +105,6 @@ export const products: Product[] = [
     themes: ["summer-vibes", "casual-weekend", "date-night"],
   },
 
-  // Office Chic Products
   {
     id: "clothing-blazers-office-1",
     name: "Navy Blazer",
@@ -160,7 +158,6 @@ export const products: Product[] = [
     themes: ["office-chic", "date-night"],
   },
 
-  // Festival Ready Products
   {
     id: "clothing-kurtas-festival-1",
     name: "Embroidered Kurta",
@@ -201,7 +198,6 @@ export const products: Product[] = [
     themes: ["festival-ready", "date-night"],
   },
 
-  // Additional products for variety
   {
     id: "clothing-jeans-casual-1",
     name: "High-Waist Jeans",

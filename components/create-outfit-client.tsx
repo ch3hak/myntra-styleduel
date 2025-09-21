@@ -52,7 +52,6 @@ export function CreateOutfitClient() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -76,9 +75,7 @@ export function CreateOutfitClient() {
 
       <div className="container mx-auto px-4 py-6">
         <div className="grid lg:grid-cols-4 gap-6">
-          {/* Theme Info & Selected Products */}
           <div className="lg:col-span-1 space-y-6">
-            {/* Theme Card */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">Challenge Rules</CardTitle>
@@ -98,7 +95,6 @@ export function CreateOutfitClient() {
               </CardContent>
             </Card>
 
-            {/* Selected Products */}
             <SelectedProducts
               products={selectedProducts}
               onRemove={(productId) => setSelectedProducts((prev) => prev.filter((p) => p.id !== productId))}
@@ -107,7 +103,6 @@ export function CreateOutfitClient() {
             />
           </div>
 
-          {/* Product Selection */}
           <div className="lg:col-span-3">
             <Tabs value={activeCategory} onValueChange={setActiveCategory} className="w-full">
               <TabsList className="grid w-full grid-cols-4">
@@ -125,7 +120,6 @@ export function CreateOutfitClient() {
               {categories.map((category) => (
                 <TabsContent key={category.id} value={category.id} className="mt-6">
                   <div className="space-y-6">
-                    {/* Subcategory Navigation */}
                     <div className="flex flex-wrap gap-2">
                       {category.subcategories.map((subcategory) => (
                         <Button
@@ -139,7 +133,6 @@ export function CreateOutfitClient() {
                       ))}
                     </div>
 
-                    {/* Product Grid */}
                     <ProductGrid
                       category={category.id}
                       subcategory={activeSubcategory}

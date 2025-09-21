@@ -64,7 +64,6 @@ export function Navigation() {
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <div className="h-8 w-8 bg-gradient-to-br from-amber-500 to-indigo-600 rounded-lg flex items-center justify-center">
               <Palette className="h-5 w-5 text-white" />
@@ -72,21 +71,17 @@ export function Navigation() {
             <span className="text-xl font-bold text-gray-900">StyleDuel</span>
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1">
             <NavItems />
           </div>
 
-          {/* Right Side Actions */}
           <div className="flex items-center gap-3">
             {user ? (
               <>
-                {/* User Points - removed thunderbolt icon */}
                 <div className="hidden sm:flex items-center gap-1 px-3 py-1 bg-amber-50 rounded-full">
                   <span className="text-sm font-medium text-amber-900">{user.points}</span>
                 </div>
 
-                {/* User Menu */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-8 w-8 rounded-full">
@@ -131,7 +126,6 @@ export function Navigation() {
               </div>
             )}
 
-            {/* Mobile Menu */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="sm" className="md:hidden">

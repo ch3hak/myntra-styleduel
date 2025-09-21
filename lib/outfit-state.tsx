@@ -50,7 +50,6 @@ export function OutfitProvider({ children }: { children: React.ReactNode }) {
 
   const setTheme = (newThemeId: string) => {
     setThemeId(newThemeId)
-    // Clear products when theme changes
     clearProducts()
   }
 

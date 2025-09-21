@@ -125,7 +125,6 @@ export function WinnersShowcase() {
             </CardHeader>
 
             <CardContent className="space-y-4">
-              {/* Engagement Stats */}
               <div className="flex items-center gap-6 text-sm text-gray-600">
                 <div className="flex items-center gap-1">
                   <Heart className="h-4 w-4" />
@@ -141,7 +140,6 @@ export function WinnersShowcase() {
                 </div>
               </div>
 
-              {/* Products Used */}
               <div>
                 <h4 className="font-semibold mb-3">Shop This Look</h4>
                 <div className="grid grid-cols-3 gap-3">

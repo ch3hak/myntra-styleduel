@@ -10,7 +10,6 @@ export function FloatingActionButton() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
-  // Don't show on certain pages
   if (pathname === "/" || pathname.startsWith("/create-outfit") || pathname.startsWith("/vote")) {
     return null
   }
@@ -23,7 +22,6 @@ export function FloatingActionButton() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      {/* Action buttons */}
       {isOpen && (
         <div className="absolute bottom-16 right-0 space-y-3">
           {actions.map((action, index) => {
@@ -45,7 +43,6 @@ export function FloatingActionButton() {
         </div>
       )}
 
-      {/* Main FAB */}
       <Button
         size="lg"
         className="h-14 w-14 rounded-full bg-gradient-to-r from-amber-600 to-indigo-600 hover:from-amber-700 hover:to-indigo-700 shadow-lg"

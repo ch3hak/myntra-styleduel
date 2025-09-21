@@ -176,7 +176,6 @@ export function LeaderboardClient() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-2">Style Champions</h1>
         <p className="text-lg text-gray-600">Celebrating our top fashion creators</p>
@@ -190,8 +189,7 @@ export function LeaderboardClient() {
         </TabsList>
 
         <TabsContent value="overall" className="space-y-6">
-          {/* Top 3 Podium */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+\          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {mockLeaderboard.slice(0, 3).map((user, index) => (
               <Card
                 key={user.id}
@@ -249,7 +247,6 @@ export function LeaderboardClient() {
             ))}
           </div>
 
-          {/* Full Leaderboard */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -386,7 +383,6 @@ export function LeaderboardClient() {
             ))}
           </div>
 
-          {/* Rewards Section */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">

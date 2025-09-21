@@ -3,9 +3,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
-  /* Updated color tokens to match fashion app design brief */
-  --background: #ffffff;
+:root {  --background: #ffffff;
   --foreground: #374151;
   --card: #fefce8;
   --card-foreground: #374151;

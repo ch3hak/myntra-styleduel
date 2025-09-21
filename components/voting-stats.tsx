@@ -47,7 +47,6 @@ const votingStats = {
 export function VotingStats({ onBack, userVotes }: VotingStatsProps) {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -62,7 +61,6 @@ export function VotingStats({ onBack, userVotes }: VotingStatsProps) {
       </header>
 
       <div className="container mx-auto px-4 py-8">
-        {/* User Stats */}
         <Card className="mb-8 bg-primary/5 border-primary/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -92,7 +90,6 @@ export function VotingStats({ onBack, userVotes }: VotingStatsProps) {
           </CardContent>
         </Card>
 
-        {/* Global Stats */}
         <div className="grid md:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardContent className="p-6 text-center">
@@ -127,7 +124,6 @@ export function VotingStats({ onBack, userVotes }: VotingStatsProps) {
           </Card>
         </div>
 
-        {/* Top Outfits */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">

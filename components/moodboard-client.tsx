@@ -13,7 +13,6 @@ import Link from "next/link"
 import { ImageIcon } from "lucide-react"
 import type { Product } from "@/lib/types"
 
-// Mock selected products - in a real app, this would come from state management
 const mockSelectedProducts: Product[] = [
   {
     id: "clothing-dresses-0",
@@ -80,7 +79,6 @@ export function MoodboardClient() {
   }
 
   const handleSaveDraft = async () => {
-    // Save as draft logic
     console.log("Saving draft...")
   }
 
@@ -92,7 +90,7 @@ export function MoodboardClient() {
 
     setIsSubmitting(true)
     try {
-      // Submit outfit logic
+       Submit outfit logic
       console.log("Submitting outfit:", {
         title: outfitTitle,
         description: outfitDescription,
@@ -101,7 +99,6 @@ export function MoodboardClient() {
         themeId,
       })
 
-      // Redirect to voting page after submission
       router.push("/vote?submitted=true")
     } catch (error) {
       console.error("Error submitting outfit:", error)
@@ -112,7 +109,6 @@ export function MoodboardClient() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -141,7 +137,6 @@ export function MoodboardClient() {
 
       <div className="container mx-auto px-4 py-6">
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* Outfit Details Form */}
           <div className="lg:col-span-1 space-y-6">
             <Card>
               <CardHeader>
@@ -186,7 +181,6 @@ export function MoodboardClient() {
               </CardContent>
             </Card>
 
-            {/* Selected Products Summary */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">Selected Items</CardTitle>
@@ -212,9 +206,7 @@ export function MoodboardClient() {
             </Card>
           </div>
 
-          {/* Outfit Visualizer & Moodboard */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Outfit Visualizer */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -227,7 +219,6 @@ export function MoodboardClient() {
               </CardContent>
             </Card>
 
-            {/* Moodboard */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
@@ -236,7 +227,6 @@ export function MoodboardClient() {
                     variant="outline"
                     size="sm"
                     onClick={() => {
-                      // In a real app, this would open an image picker
                       const sampleImages = [
                         "/summer-fashion-inspiration.jpg",
                         "/bright-colors-outfit.jpg",

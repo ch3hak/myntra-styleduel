@@ -55,7 +55,6 @@ export function SelectedProducts({ products, onRemove, totalCost, budget }: Sele
           </div>
         )}
 
-        {/* Budget Summary */}
         <div className="border-t pt-4 space-y-2">
           <div className="flex justify-between text-sm">
             <span>Total Cost:</span>
@@ -73,7 +72,6 @@ export function SelectedProducts({ products, onRemove, totalCost, budget }: Sele
           </div>
         </div>
 
-        {/* Requirements Check */}
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <div className={`w-2 h-2 rounded-full ${hasClothing ? "bg-green-500" : "bg-muted"}`} />
@@ -81,7 +79,6 @@ export function SelectedProducts({ products, onRemove, totalCost, budget }: Sele
           </div>
         </div>
 
-        {/* Proceed Button */}
         {canProceed && totalCost <= budget && (
           <Link href="/create-outfit/moodboard" className="block">
             <Button className="w-full">Create Moodboard</Button>

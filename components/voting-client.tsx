@@ -10,7 +10,6 @@ import { Heart, X, RotateCcw, Trophy, Users } from "lucide-react"
 import Link from "next/link"
 import type { Outfit } from "@/lib/types"
 
-// Mock outfit data for voting
 const mockOutfits: Outfit[] = [
   {
     id: "1",
@@ -95,21 +94,17 @@ export function VotingClient() {
   const [userVotes, setUserVotes] = useState(0)
   const [showStats, setShowStats] = useState(false)
 
-  // Generate random pairs for voting
   const generateNewPair = () => {
     const availableOutfits = mockOutfits.filter((outfit) => {
-      // Filter outfits that haven't been in voted pairs
       return !Array.from(votedPairs).some((pairId) => pairId.includes(outfit.id))
     })
 
     if (availableOutfits.length < 2) {
-      // Reset if we've voted on all possible pairs
       setVotedPairs(new Set())
       setCurrentPair([mockOutfits[0], mockOutfits[1]])
       return
     }
 
-    // Randomly select two outfits
     const shuffled = [...availableOutfits].sort(() => 0.5 - Math.random())
     const pair: [Outfit, Outfit] = [shuffled[0], shuffled[1]]
     setCurrentPair(pair)
@@ -122,10 +117,8 @@ export function VotingClient() {
     setVotedPairs((prev) => new Set([...prev, pairId]))
     setUserVotes((prev) => prev + 1)
 
-    // In a real app, this would send the vote to the backend
     console.log("Vote cast for outfit:", winnerId)
 
-    // Generate next pair after a short delay
     setTimeout(() => {
       generateNewPair()
     }, 500)
@@ -145,7 +138,6 @@ export function VotingClient() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
@@ -207,7 +199,6 @@ export function VotingClient() {
           <div className="max-w-6xl mx-auto">
             <OutfitDuel outfit1={currentPair[0]} outfit2={currentPair[1]} onVote={handleVote} onSkip={handleSkip} />
 
-            {/* Action Buttons */}
             <div className="flex items-center justify-center gap-4 mt-8">
               <Button variant="outline" onClick={handleSkip} className="flex items-center gap-2 bg-transparent">
                 <X className="h-4 w-4" />
@@ -219,7 +210,6 @@ export function VotingClient() {
               </Button>
             </div>
 
-            {/* Voting Tips */}
             <Card className="mt-8 bg-muted/50">
               <CardContent className="p-6">
                 <h3 className="font-semibold mb-3">Voting Tips</h3>

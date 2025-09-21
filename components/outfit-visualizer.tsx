@@ -18,7 +18,6 @@ export function OutfitVisualizer({ products }: OutfitVisualizerProps) {
 
   return (
     <div className="space-y-6">
-      {/* Main Outfit Display */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {products.map((product) => (
           <Card key={product.id} className="group hover:shadow-md transition-shadow">
@@ -54,7 +53,6 @@ export function OutfitVisualizer({ products }: OutfitVisualizerProps) {
         ))}
       </div>
 
-      {/* Category Breakdown */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {Object.entries(categorizedProducts).map(([category, items]) => (
           <div key={category} className="text-center p-4 bg-muted rounded-lg">
@@ -69,7 +67,6 @@ export function OutfitVisualizer({ products }: OutfitVisualizerProps) {
         ))}
       </div>
 
-      {/* Style Summary */}
       <div className="bg-card p-4 rounded-lg border">
         <h4 className="font-semibold mb-3">Style Summary</h4>
         <div className="grid md:grid-cols-2 gap-4 text-sm">

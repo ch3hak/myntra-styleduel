@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Check for existing session
+   
     const savedUser = localStorage.getItem("user")
     if (savedUser) {
       setUser(JSON.parse(savedUser))
@@ -47,7 +47,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true)
     try {
-      // Mock login - in real app, this would call an API
       await new Promise((resolve) => setTimeout(resolve, 1000))
 
       const mockUser: User = {
@@ -72,7 +71,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signup = async (name: string, email: string, password: string): Promise<boolean> => {
     setIsLoading(true)
     try {
-      // Mock signup - in real app, this would call an API
       await new Promise((resolve) => setTimeout(resolve, 1000))
 
       const mockUser: User = {

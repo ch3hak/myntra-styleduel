@@ -47,7 +47,6 @@ const themes = [
 export default function ThemesPage() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
@@ -90,7 +89,6 @@ export default function ThemesPage() {
               </CardHeader>
 
               <CardContent className="space-y-4">
-                {/* Rules */}
                 <div>
                   <h4 className="font-semibold text-sm text-foreground mb-2">Rules:</h4>
                   <ul className="text-sm text-muted-foreground space-y-1">
@@ -103,7 +101,6 @@ export default function ThemesPage() {
                   </ul>
                 </div>
 
-                {/* Budget & Stats */}
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-4">
                     <span className="text-muted-foreground">Budget: ₹{theme.budget.toLocaleString()}</span>
@@ -118,7 +115,7 @@ export default function ThemesPage() {
                   </div>
                 </div>
 
-                {/* Rewards */}
+                {/* Rewards*/}
                 <div>
                   <h4 className="font-semibold text-sm text-foreground mb-2 flex items-center gap-1">
                     <Trophy className="h-4 w-4 text-primary" />

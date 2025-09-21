@@ -16,7 +16,6 @@ interface ProductGridProps {
   remainingBudget: number
 }
 
-// Mock product data - in a real app, this would come from an API
 const generateMockProducts = (category: string, subcategory: string, themeId: string): Product[] => {
   const baseProducts = {
     clothing: {

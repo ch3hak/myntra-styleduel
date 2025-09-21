@@ -34,14 +34,12 @@ export default function ProfilePage() {
   }
 
   const handleSave = () => {
-    // In a real app, this would update the user profile
     console.log("Saving profile:", { name, bio })
     setIsEditing(false)
   }
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -57,7 +55,6 @@ export default function ProfilePage() {
 
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto space-y-8">
-          {/* Profile Header */}
           <Card>
             <CardContent className="pt-6">
               <div className="flex flex-col md:flex-row items-center gap-6">
@@ -114,7 +111,6 @@ export default function ProfilePage() {
             </CardContent>
           </Card>
 
-          {/* Stats Cards */}
           <div className="grid md:grid-cols-3 gap-6">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -150,7 +146,6 @@ export default function ProfilePage() {
             </Card>
           </div>
 
-          {/* Recent Activity */}
           <Card>
             <CardHeader>
               <CardTitle>Recent Activity</CardTitle>
