@@ -1,64 +1,67 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Calendar, Trophy, Users, ArrowRight } from "lucide-react"
-import Link from "next/link"
-
-const themes = [
-  {
-    id: "summer-vibes",
-    title: "Summer Vibes",
-    description: "Create the perfect summer outfit with bright colors and light fabrics",
-    rules: ["Must include bright colors", "Light, breathable fabrics only", "Summer accessories encouraged"],
-    budget: 5000,
-    requiredColors: ["Yellow", "Orange", "Pink", "Turquoise"],
-    rewards: ["₹2000 voucher", "Featured on homepage", "Style influencer badge"],
-    status: "active" as const,
-    entries: 127,
-    endDate: new Date("2024-07-15"),
-    image: "/summer-fashion-bright-colors.jpg",
-  },
-  {
-    id: "office-chic",
-    title: "Office Chic",
-    description: "Professional yet stylish - perfect for the modern workplace",
-    rules: ["Professional attire required", "Neutral or muted colors", "Must include blazer or formal top"],
-    budget: 8000,
-    rewards: ["₹3000 voucher", "LinkedIn feature", "Professional styling session"],
-    status: "active" as const,
-    entries: 89,
-    endDate: new Date("2024-07-20"),
-    image: "/office-professional-fashion.jpg",
-  },
-  {
-    id: "festival-ready",
-    title: "Festival Ready",
-    description: "Traditional meets contemporary for the festive season",
-    rules: ["Traditional elements required", "Festive colors preferred", "Cultural accessories encouraged"],
-    budget: 12000,
-    rewards: ["₹5000 voucher", "Designer consultation", "Festival lookbook feature"],
-    status: "active" as const,
-    entries: 45,
-    endDate: new Date("2024-08-01"),
-    image: "/indian-festival-traditional-fashion.jpg",
-  },
-]
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Calendar, Trophy, Users, ArrowRight } from 'lucide-react'
+import { themesAPI } from '@/lib/api'
+import { useOutfit } from '@/lib/outfit-state'
+import type { Theme } from '@/lib/types'
 
 export default function ThemesPage() {
+  const [themes, setThemes] = useState<Theme[]>([])
+  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
+  const { setTheme } = useOutfit()
+
+  useEffect(() => {
+    const fetchThemes = async () => {
+      try {
+        const response = await themesAPI.getAll()
+        setThemes(response.data)
+      } catch (error) {
+        console.error('Error fetching themes:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchThemes()
+  }, [])
+
+  const handleThemeSelect = (themeId: string) => {
+    setTheme(themeId)
+    navigate(`/create-outfit?theme=${themeId}`)
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <span className="text-2xl font-bold text-primary">StyleDuel</span>
-          </Link>
+          </div>
           <nav className="flex items-center gap-6">
-            <Link href="/vote" className="text-muted-foreground hover:text-foreground transition-colors">
+            <button 
+              onClick={() => navigate('/vote')} 
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Vote
-            </Link>
-            <Link href="/leaderboard" className="text-muted-foreground hover:text-foreground transition-colors">
+            </button>
+            <button 
+              onClick={() => navigate('/leaderboard')} 
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Leaderboard
-            </Link>
+            </button>
           </nav>
         </div>
       </header>
@@ -71,10 +74,10 @@ export default function ThemesPage() {
 
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
           {themes.map((theme) => (
-            <Card key={theme.id} className="group hover:shadow-lg transition-all duration-300">
+            <Card key={theme._id} className="group hover:shadow-lg transition-all duration-300">
               <div className="aspect-video bg-muted rounded-t-lg overflow-hidden">
                 <img
-                  src={theme.image || "/placeholder.svg"}
+                  src={theme.image || '/placeholder.svg'}
                   alt={theme.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -111,11 +114,10 @@ export default function ThemesPage() {
                   </div>
                   <div className="flex items-center gap-1 text-muted-foreground">
                     <Calendar className="h-4 w-4" />
-                    {theme.endDate.toLocaleDateString()}
+                    {new Date(theme.endDate).toLocaleDateString()}
                   </div>
                 </div>
 
-                {/* Rewards*/}
                 <div>
                   <h4 className="font-semibold text-sm text-foreground mb-2 flex items-center gap-1">
                     <Trophy className="h-4 w-4 text-primary" />
@@ -130,12 +132,13 @@ export default function ThemesPage() {
                   </div>
                 </div>
 
-                <Link href={`/create-outfit?theme=${theme.id}`} className="block">
-                  <Button className="w-full group">
-                    Start Creating
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
+                <Button 
+                  className="w-full group" 
+                  onClick={() => handleThemeSelect(theme.id)}
+                >
+                  Start Creating
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
               </CardContent>
             </Card>
           ))}

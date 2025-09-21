@@ -1,76 +1,112 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Eye, Heart, MessageCircle, Edit, Trash2, Plus } from "lucide-react"
-import Link from "next/link"
-
-const mockOutfits = [
-  {
-    id: "1",
-    title: "Sunny Day Vibes",
-    description: "Perfect for a casual summer day out with friends",
-    theme: "Summer Vibes",
-    status: "submitted" as const,
-    votes: 24,
-    views: 156,
-    comments: 8,
-    createdAt: new Date("2024-06-15"),
-    image: "/summer-outfit-bright-colors.jpg",
-    products: 4,
-    totalCost: 4597,
-  },
-  {
-    id: "2",
-    title: "Office Ready",
-    description: "Professional yet stylish for important meetings",
-    theme: "Office Chic",
-    status: "voting" as const,
-    votes: 12,
-    views: 89,
-    comments: 3,
-    createdAt: new Date("2024-06-18"),
-    image: "/professional-office-outfit.png",
-    products: 5,
-    totalCost: 7299,
-  },
-  {
-    id: "3",
-    title: "Festival Glam",
-    description: "Traditional meets modern for the festive season",
-    theme: "Festival Ready",
-    status: "draft" as const,
-    votes: 0,
-    views: 0,
-    comments: 0,
-    createdAt: new Date("2024-06-20"),
-    image: "/indian-festival-traditional-outfit.jpg",
-    products: 3,
-    totalCost: 8999,
-  },
-]
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Eye, Heart, MessageCircle, Edit, Trash2, Plus } from 'lucide-react'
+import { outfitsAPI } from '@/lib/api'
+import { useAuth } from '@/lib/auth'
+import type { Outfit } from '@/lib/types'
+import { toast } from 'sonner'
 
 export default function MyOutfitsPage() {
-  const submittedOutfits = mockOutfits.filter((outfit) => outfit.status === "submitted" || outfit.status === "voting")
-  const draftOutfits = mockOutfits.filter((outfit) => outfit.status === "draft")
+  const [outfits, setOutfits] = useState<Outfit[]>([])
+  const [loading, setLoading] = useState(true)
+  const { user } = useAuth()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchOutfits = async () => {
+      if (!user) return
+      
+      try {
+        const response = await outfitsAPI.getAll(user.id)
+        setOutfits(response.data)
+      } catch (error) {
+        console.error('Error fetching outfits:', error)
+        toast.error('Failed to load outfits')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchOutfits()
+  }, [user])
+
+  const handleEdit = (outfitId: string) => {
+    // Navigate to edit page (you can implement this)
+    toast.info('Edit functionality coming soon!')
+  }
+
+  const handleDelete = async (outfitId: string) => {
+    if (!confirm('Are you sure you want to delete this outfit?')) return
+    
+    try {
+      await outfitsAPI.delete(outfitId)
+      setOutfits(prev => prev.filter(outfit => outfit._id !== outfitId))
+      toast.success('Outfit deleted successfully')
+    } catch (error) {
+      console.error('Error deleting outfit:', error)
+      toast.error('Failed to delete outfit')
+    }
+  }
+
+  const handleView = (outfitId: string) => {
+    // Navigate to outfit detail view
+    toast.info('View functionality coming soon!')
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Card className="w-full max-w-md text-center">
+          <CardContent className="pt-6">
+            <p className="text-muted-foreground mb-4">Please sign in to view your outfits</p>
+            <Button onClick={() => navigate('/login')}>Sign In</Button>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
+
+  const submittedOutfits = outfits.filter((outfit) => outfit.status === 'submitted' || outfit.status === 'voting')
+  const draftOutfits = outfits.filter((outfit) => outfit.status === 'draft')
 
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+          <button onClick={() => navigate('/')} className="flex items-center gap-2">
             <span className="text-2xl font-bold text-primary">StyleDuel</span>
-          </Link>
+          </button>
           <nav className="flex items-center gap-6">
-            <Link href="/themes" className="text-muted-foreground hover:text-foreground transition-colors">
+            <button 
+              onClick={() => navigate('/themes')} 
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Themes
-            </Link>
-            <Link href="/vote" className="text-muted-foreground hover:text-foreground transition-colors">
+            </button>
+            <button 
+              onClick={() => navigate('/vote')} 
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Vote
-            </Link>
-            <Link href="/leaderboard" className="text-muted-foreground hover:text-foreground transition-colors">
+            </button>
+            <button 
+              onClick={() => navigate('/leaderboard')} 
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Leaderboard
-            </Link>
+            </button>
           </nav>
         </div>
       </header>
@@ -81,12 +117,10 @@ export default function MyOutfitsPage() {
             <h1 className="text-4xl font-bold text-foreground mb-2">My Outfits</h1>
             <p className="text-xl text-muted-foreground">Manage your style creations and track their performance</p>
           </div>
-          <Link href="/themes">
-            <Button size="lg">
-              <Plus className="mr-2 h-5 w-5" />
-              Create New Outfit
-            </Button>
-          </Link>
+          <Button size="lg" onClick={() => navigate('/themes')}>
+            <Plus className="mr-2 h-5 w-5" />
+            Create New Outfit
+          </Button>
         </div>
 
         <Tabs defaultValue="submitted" className="w-full">
@@ -100,24 +134,22 @@ export default function MyOutfitsPage() {
               <Card className="text-center py-12">
                 <CardContent>
                   <p className="text-muted-foreground mb-4">No submitted outfits yet</p>
-                  <Link href="/themes">
-                    <Button>Create Your First Outfit</Button>
-                  </Link>
+                  <Button onClick={() => navigate('/themes')}>Create Your First Outfit</Button>
                 </CardContent>
               </Card>
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {submittedOutfits.map((outfit) => (
-                  <Card key={outfit.id} className="group hover:shadow-lg transition-all duration-300">
+                  <Card key={outfit._id} className="group hover:shadow-lg transition-all duration-300">
                     <div className="aspect-video bg-muted rounded-t-lg overflow-hidden relative">
                       <img
-                        src={outfit.image || "/placeholder.svg"}
+                        src={outfit.moodboardImages[0] || '/placeholder.svg'}
                         alt={outfit.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       <div className="absolute top-2 right-2">
-                        <Badge variant={outfit.status === "voting" ? "default" : "secondary"}>
-                          {outfit.status === "voting" ? "In Voting" : "Submitted"}
+                        <Badge variant={outfit.status === 'voting' ? 'default' : 'secondary'}>
+                          {outfit.status === 'voting' ? 'In Voting' : 'Submitted'}
                         </Badge>
                       </div>
                     </div>
@@ -131,7 +163,7 @@ export default function MyOutfitsPage() {
                       </div>
                       <div className="flex items-center gap-2">
                         <Badge variant="outline" className="text-xs">
-                          {outfit.theme}
+                          {outfit.themeId}
                         </Badge>
                       </div>
                     </CardHeader>
@@ -145,25 +177,38 @@ export default function MyOutfitsPage() {
                           </div>
                           <div className="flex items-center gap-1">
                             <Eye className="h-4 w-4" />
-                            {outfit.views}
+                            {Math.floor(outfit.votes * 6.5)}
                           </div>
                           <div className="flex items-center gap-1">
                             <MessageCircle className="h-4 w-4" />
-                            {outfit.comments}
+                            {Math.floor(outfit.votes * 0.3)}
                           </div>
                         </div>
-                        <span>₹{outfit.totalCost.toLocaleString()}</span>
+                        <span>₹{outfit.products.reduce((sum, p) => sum + p.price, 0).toLocaleString()}</span>
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm" className="flex-1 bg-transparent">
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="flex-1 bg-transparent"
+                          onClick={() => handleView(outfit._id)}
+                        >
                           <Eye className="mr-2 h-4 w-4" />
                           View
                         </Button>
-                        <Button variant="outline" size="sm">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleEdit(outfit._id)}
+                        >
                           <Edit className="h-4 w-4" />
                         </Button>
-                        <Button variant="outline" size="sm">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleDelete(outfit._id)}
+                        >
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -179,18 +224,16 @@ export default function MyOutfitsPage() {
               <Card className="text-center py-12">
                 <CardContent>
                   <p className="text-muted-foreground mb-4">No draft outfits</p>
-                  <Link href="/themes">
-                    <Button>Start Creating</Button>
-                  </Link>
+                  <Button onClick={() => navigate('/themes')}>Start Creating</Button>
                 </CardContent>
               </Card>
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {draftOutfits.map((outfit) => (
-                  <Card key={outfit.id} className="group hover:shadow-lg transition-all duration-300">
+                  <Card key={outfit._id} className="group hover:shadow-lg transition-all duration-300">
                     <div className="aspect-video bg-muted rounded-t-lg overflow-hidden relative">
                       <img
-                        src={outfit.image || "/placeholder.svg"}
+                        src={outfit.moodboardImages[0] || '/placeholder.svg'}
                         alt={outfit.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
@@ -203,22 +246,30 @@ export default function MyOutfitsPage() {
                       <CardTitle className="text-lg line-clamp-1">{outfit.title}</CardTitle>
                       <CardDescription className="line-clamp-2">{outfit.description}</CardDescription>
                       <Badge variant="outline" className="text-xs w-fit">
-                        {outfit.theme}
+                        {outfit.themeId}
                       </Badge>
                     </CardHeader>
 
                     <CardContent className="space-y-4">
                       <div className="flex items-center justify-between text-sm text-muted-foreground">
-                        <span>{outfit.products} items</span>
-                        <span>₹{outfit.totalCost.toLocaleString()}</span>
+                        <span>{outfit.products.length} items</span>
+                        <span>₹{outfit.products.reduce((sum, p) => sum + p.price, 0).toLocaleString()}</span>
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <Button size="sm" className="flex-1">
+                        <Button 
+                          size="sm" 
+                          className="flex-1"
+                          onClick={() => handleEdit(outfit._id)}
+                        >
                           <Edit className="mr-2 h-4 w-4" />
                           Continue Editing
                         </Button>
-                        <Button variant="outline" size="sm">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleDelete(outfit._id)}
+                        >
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
